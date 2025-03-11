@@ -2,6 +2,12 @@
 
 A Cloudflare Workers API service that fetches faculty information from Mar Athanasius College of Engineering's etlab portal. The API includes data backup and image optimization features.
 
+## Video Overview
+
+[![Watch the video](https://www.loom.com/embed/73b888b48a1342c086948647da2e2351?sid=b8910e3b-c253-4e94-82ce-b69e81e53005)](https://www.loom.com/share/73b888b48a1342c086948647da2e2351?sid=f9e3d43e-ab31-4128-94e2-3567785b7681)
+
+Click the image above to watch the video overview of the project.
+
 ## Features
 
 - 📚 Faculty data from all departments:
@@ -26,17 +32,27 @@ A Cloudflare Workers API service that fetches faculty information from Mar Athan
 
 ## API Endpoints
 
-### Get All Faculty
+### Get Faculty Data by Department
+
+GET /api/faculty?dept=:departmentId
+
+Retrieves faculty information for a specific department.
+
+#### Parameters
+
+| Parameter    | Type   | Description                    |
+|--------------|--------|--------------------------------|
+| departmentId | string | Department key (e.g., `ca`, `civil`, `mechanical`) |
+
+#### Example Request
+
+curl https://your-worker.your-subdomain.workers.dev/api/faculty?dept=mechanical
+
+## Get All Faculty
 http
 GET /api/faculty
 
 Returns a list of all faculty members across all departments.
-
-### Get Faculty by Department
-```http
-GET /api/faculty/:departmentId
-```
-Returns faculty members from a specific department using the department ID.
 
 ### Get Single Faculty
 ```http
@@ -63,15 +79,19 @@ Returns detailed information about a specific faculty member.
 
 ## Error Handling
 
-The API uses standard HTTP status codes and returns error messages in the following format:
+The API returns appropriate HTTP status codes:
+
+- `200`: Successful request
+- `400`: Invalid request parameters
+- `404`: Department not found
+- `500`: Server error
+
+Example error response:
 
 ```json
 {
   "success": false,
-  "error": {
-    "message": string,
-    "code": string
-  }
+  "error": "Department not found"
 }
 ```
 
@@ -112,17 +132,77 @@ npm run dev
 npm run deploy
 ```
 
+## Deployment
+
+### Prerequisites
+
+1. [Node.js](https://nodejs.org/) (v14 or higher)
+2. [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+3. Cloudflare account with Workers, KV, and R2 access
+
+### Setup
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd mace-faculty-api
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Configure Cloudflare resources:
+
+   a. Create KV namespace:
+   ```bash
+   wrangler kv:namespace create "FACULTY_BACKUP"
+   ```
+
+   b. Create R2 bucket:
+   ```bash
+   wrangler r2 bucket create faculty-images
+   ```
+
+4. Update `wrangler.toml` with your account details and binding information.
+
+5. Deploy to Cloudflare Workers:
+
+```bash
+wrangler deploy
+```
+
+## Local Development
+
+Run the development server:
+
+```bash
+wrangler dev
+```
+
+The API will be available at `http://localhost:8787`
+
+Make sure to replace your-worker.your-subdomain.workers.dev with your actual Cloudflare Workers URL for live deployment.
+
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## Acknowledgments
+
+- Mar Athanasius College of Engineering for the faculty data
+- Cloudflare for the Workers, KV, and R2 infrastructure
 
 ## Support
 

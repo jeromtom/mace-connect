@@ -33,7 +33,6 @@ export default {
         console.log(`Fetching single department: ${dept}`);
         try {
           if (!useBackup) {
-            // Try primary API first
             facultyData = { [dept]: await scrapeDepartmentData(dept, DEPARTMENTS[dept], env) };
             // Update backup after successful fetch
             await env.FACULTY_BACKUP.put(dept, JSON.stringify(facultyData[dept]));
