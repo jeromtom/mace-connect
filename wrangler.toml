@@ -11,7 +11,6 @@ binding = "FACULTY_IMAGES"
 bucket_name = "faculty-images"
 
 [vars]
-CLOUDFLARE_ACCOUNT_ID = "9f7e4d46cbee40a399480ecd03246d9e"
 
 [build]
 command = "npm install"

@@ -1,6 +1,3 @@
-// Importing the Cheerio library (JavaScript equivalent of BeautifulSoup)
-import * as cheerio from 'cheerio';
-
 // API endpoint for faculty data
 const API_URL = 'https://mace.etlab.in/website/json/getdeptdetails';
 
@@ -86,7 +83,6 @@ export default {
     } catch (error) {
       return new Response(JSON.stringify({ 
         error: error.message,
-        stack: error.stack,
         details: error.cause || 'No additional details'
       }), {
         headers,
@@ -164,7 +160,7 @@ async function storeImageInCloudflareImages(imageUrl, key, env) {
     formData.append('file', new Blob([await response.arrayBuffer()]));
     formData.append('metadata', JSON.stringify({ key }));
 
-    const uploadResponse = await fetch('https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1', {
+    const uploadResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CF_ACCOUNT_ID}/images/v1`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${env.CLOUDFLARE_API_TOKEN}`
