@@ -1,0 +1,19 @@
+name = "mace-faculty"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+kv_namespaces = [
+  { binding = "FACULTY_BACKUP", id = "b44d207a95ca4f53b1bf37d3e0b9e669" }
+]
+
+[[r2_buckets]]
+binding = "FACULTY_IMAGES"
+bucket_name = "faculty-images"
+
+[vars]
+CLOUDFLARE_ACCOUNT_ID = "9f7e4d46cbee40a399480ecd03246d9e"
+
+[build]
+command = "npm install"
+
+compatibility_flags = ["nodejs_compat"] 

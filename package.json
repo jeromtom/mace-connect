@@ -1,0 +1,15 @@
+{
+  "name": "mace-faculty-scraper",
+  "version": "1.0.0",
+  "description": "Faculty data scraper for MACE",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
